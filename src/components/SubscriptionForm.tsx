@@ -1,4 +1,4 @@
-// src/components/SubscriptionForm.tsx
+// src/components/SubscriptionForm.tsx`
 import { useState } from "react";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
@@ -20,6 +20,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 const subscriptionSchema = z.object({
   name: z.string().max(100, "Name must be 100 characters or less").min(1, "Name is required"),
@@ -56,11 +64,9 @@ const SubscriptionForm: React.FC<SubscriptionFormProps> = ({ onSubmit }) => {
     }
   });
 
-
   const handleFormSubmit = async (data: SubscriptionFormValues) => {
     setFormError(null);
     try {
-      data.price = Number(data.price)
       onSubmit(data);
     } catch (error) {
       console.error("Form submission error:", error);
@@ -94,14 +100,14 @@ const SubscriptionForm: React.FC<SubscriptionFormProps> = ({ onSubmit }) => {
         <FormField
           control={form.control}
           name="price"
-          render={({ field: { onChange, ...field }}) => (
+          render={({ field: { onChange, ...field } }) => (
             <FormItem>
               <FormLabel>Price</FormLabel>
               <FormControl>
                 <Input type="number" id="price" {...field} onChange={(e) => {
                   const value = e.target.value === "" ? 0 : Number(e.target.value);
                   onChange(value);
-                }}/>
+                }} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -199,7 +205,7 @@ const SubscriptionForm: React.FC<SubscriptionFormProps> = ({ onSubmit }) => {
         <Button type="submit">Add Subscription</Button>
       </form>
     </Form>
-  );
+  )
 };
 
 export default SubscriptionForm;
