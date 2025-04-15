@@ -45,6 +45,8 @@ export const users = createTable("user", (d) => ({
 
 export const usersRelations = relations(users, ({ many }) => ({
   accounts: many(accounts),
+  subscriptions: many(subscriptions),
+  notifications: many(notifications),
 }));
 
 export const accounts = createTable(
@@ -85,7 +87,7 @@ export const sessions = createTable(
       .varchar({ length: 255 })
       .notNull()
       .references(() => users.id),
-    expires: d.timestamp({mode: "date",withTimezone: true}).notNull(),
+    expires: d.timestamp({ mode: "date", withTimezone: true }).notNull(),
   }),
   (t) => [index("session_user_id_idx").on(t.userId)],
 );
@@ -122,15 +124,39 @@ export const subscriptions = createTable(
       .notNull()
       .references(() => users.id),
   }),
-  (table) => ({
-    nameIdx: index('subscription_name_idx').on(table.name),
-    priceIdx: index('price_idx').on(table.price),
-    startDateIdx: index('start_date_idx').on(table.startDate),
-    renewalDateIdx: index('renewal_date_idx').on(table.renewalDate),
+  (t) => ({
+    nameIdx: index('subscription_name_idx').on(t.name),
+    priceIdx: index('price_idx').on(t.price),
+    startDateIdx: index('start_date_idx').on(t.startDate),
+    renewalDateIdx: index('renewal_date_idx').on(t.renewalDate),
   })
 );
 
 
 export const subscriptionRelations = relations(subscriptions, ({ one }) => ({
   user: one(users, { fields: [subscriptions.userId], references: [users.id] }),
+}));
+
+export const notifications = createTable("notifications", (d) => ({
+  id: d.integer().primaryKey().generatedByDefaultAsIdentity(),
+  userId: d
+    .varchar({ length: 255 })
+    .notNull()
+    .references(() => users.id),
+  title: d.varchar({ length: 255 }).notNull(),
+  message: d.text().notNull(),
+  createdAt: d.timestamp({ withTimezone: true }).defaultNow().notNull(),
+  read: d.boolean().default(false).notNull(),
+  type: d.varchar({ length: 50 }),
+}), (t) => ({
+  userIdIdx: index("idx_notifications_user_id").on(t.userId),
+  createdAtIdx: index("idx_notifications_created_at").on(t.createdAt),
+  userIdReadIdx: index("idx_notifications_user_id_read").on(t.userId, t.read),
+}));
+
+export const notificationsRelations = relations(notifications, ({ one }) => ({
+  user: one(users, {
+    fields: [notifications.userId],
+    references: [users.id],
+  }),
 }));
