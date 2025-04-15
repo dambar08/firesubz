@@ -1,6 +1,7 @@
 import { auth } from "@/server/auth";
 import { redirect } from "next/navigation";
 import Sidebar from "@/components/Sidebar";
+import DashboardHeaderServer from "@/components/DashboardHeaderServer";
 
 export default async function DashboardLayoutServer({
   children,
@@ -11,8 +12,13 @@ export default async function DashboardLayoutServer({
   if (!session) {
     redirect("/");
   }
-  return <div className="flex">
-    <Sidebar />
-    <main className="flex-1">{children}</main>
-  </div>;
+  return (
+    <div className="flex h-screen">
+      <Sidebar />
+      <main className="flex-1 flex flex-col">
+        <DashboardHeaderServer/>
+        <div className="flex-1">{children}</div>
+      </main>
+    </div>
+  );
 }
