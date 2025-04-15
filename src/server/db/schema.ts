@@ -104,23 +104,27 @@ export const verificationTokens = createTable(
   (t) => [primaryKey({ columns: [t.identifier, t.token] })],
 );
 
-export const subscriptions = createTable('subscription', {
-  id: integer('id').primaryKey({ autoIncrement: true }),
-  name: text('name', { length: 100 }).notNull(),
-  price: real('price').notNull(),
-  currency: text('currency', { enum: ['USD', 'EUR', 'GBP'] }).default('USD'),
-  frequency: text('frequency', { enum: ['daily', 'weekly', 'monthly', 'yearly'] }),
-  category: text('category', { enum: ['sports', 'news', 'entertainment', 'lifestyle', 'technology', 'finance', 'politics', 'other'] }).notNull(),
-  paymentMethod: text('paymentMethod').notNull(),
-  status: text('status', { enum: ['active', 'cancelled', 'expired'] }).default('active'),
-  startDate: integer('startDate', { mode: 'timestamp' }).notNull(),
-  renewalDate: integer('renewalDate', { mode: 'timestamp' }),
-}, (table) => ({
-  nameIdx: index('subscription_name_idx').on(table.name),
-  priceIdx: index('price_idx').on(table.price),
-  startDateIdx: index('start_date_idx').on(table.startDate),
-  renewalDateIdx: index('renewal_date_idx').on(table.renewalDate),
-}));
+export const subscriptions = createTable(
+  'subscription',
+  (d) => ({
+    id: d.integer('id').primaryKey({ autoIncrement: true }),
+    name: d.text('name', { length: 100 }).notNull(),
+    price: d.real('price').notNull(),
+    currency: d.text('currency', { enum: ['USD', 'EUR', 'GBP'] }).default('USD'),
+    frequency: d.text('frequency', { enum: ['daily', 'weekly', 'monthly', 'yearly'] }),
+    category: d.text('category', { enum: ['sports', 'news', 'entertainment', 'lifestyle', 'technology', 'finance', 'politics', 'other'] }).notNull(),
+    paymentMethod: d.text('paymentMethod').notNull(),
+    status: d.text('status', { enum: ['active', 'cancelled', 'expired'] }).default('active'),
+    startDate: d.integer('startDate', { mode: 'timestamp' }).notNull(),
+    renewalDate: d.integer('renewalDate', { mode: 'timestamp' }),
+  }),
+  (table) => ({
+    nameIdx: index('subscription_name_idx').on(table.name),
+    priceIdx: index('price_idx').on(table.price),
+    startDateIdx: index('start_date_idx').on(table.startDate),
+    renewalDateIdx: index('renewal_date_idx').on(table.renewalDate),
+  })
+);
 
 
 export const subscriptionRelations = relations(subscriptions, ({ one }) => ({
