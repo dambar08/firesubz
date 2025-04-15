@@ -2,6 +2,7 @@ import { FlatCompat } from "@eslint/eslintrc";
 import tseslint from "typescript-eslint";
 // @ts-ignore -- no types for this plugin
 import drizzle from "eslint-plugin-drizzle";
+import reacthook from "eslint-plugin-react-hooks";
 
 const compat = new FlatCompat({
   baseDirectory: import.meta.dirname,
@@ -16,6 +17,7 @@ export default tseslint.config(
     files: ["**/*.ts", "**/*.tsx"],
     plugins: {
       drizzle,
+      reacthook
     },
     extends: [
       ...tseslint.configs.recommended,
@@ -46,6 +48,8 @@ export default tseslint.config(
         "error",
         { drizzleObjectName: ["db", "ctx.db"] },
       ],
+      "react-hooks/rules-of-hooks": "error", // Checks rules of Hooks
+      "react-hooks/exhaustive-deps": "warn" 
     },
   },
   {
