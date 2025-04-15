@@ -1,14 +1,32 @@
-// src/app/subscriptions/page.tsx
-import { db } from "@/server/db";
+// src/app/dashboard/subscriptions/page.tsx
+"use client";
 import { subscriptions } from "@/server/db/schema";
-import { eq } from "drizzle-orm";
+import { Button } from "@/components/ui/button";
+import { useState, useEffect } from "react";
+import SubscriptionForm from "@/components/SubscriptionForm"; // Import SubscriptionForm
+import { getSubscriptions } from "@/lib/subscriptions";
+import { Subscription } from "@/types/subscription";
 
-export default async function SubscriptionTracker() {
-  const allSubscriptions = await db.query.subscriptions.findMany({});
+export default function SubscriptionTracker() {
+  const [isFormVisible, setIsFormVisible] = useState(false);
+  const [allSubscriptions, setAllSubscriptions] = useState<
+    typeof subscriptions._.inferSelect[]
+  >([]);
+
+  useEffect(() => {
+    getSubscriptions().then(setAllSubscriptions);
+  }, []);
+
   return (
     <div className="container mx-auto py-10">
-      <h1 className="text-3xl font-bold text-center mb-8">Subscription Tracker</h1>
-      <div className="space-y-4">
+      <h1 className="text-3xl font-bold text-center mb-8">
+        Subscription Tracker
+      </h1>
+      <Button onClick={() => setIsFormVisible(!isFormVisible)}>
+        New Subscription
+      </Button>
+      {isFormVisible && <SubscriptionForm />}
+      <div className="space-y-4">       
         {allSubscriptions.map((subscription) => (
           <div
             key={subscription.id}
@@ -43,3 +61,12 @@ export default async function SubscriptionTracker() {
     </div>
   );
 }
+
+
+diff --git a/src/lib/subscriptions.ts b/src/lib/subscriptions.ts
+new file mode 100644
+index 0000000..71674eb
+--- /dev/null
++++ b/src/lib/subscriptions.ts
+
+

@@ -2,6 +2,18 @@
   "name": "firesubz",
   "version": "0.1.0",
   "private": true,
+  "metadata": {
+    "name": "firesubz",
+    "version": "0.1.0",
+    "description": "A subscription management application",
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/dambar08/firesubz.git"
+    },
+    "bugs": {
+      "url": "https://github.com/dambar08/firesubz/issues"
+    }
+  },
   "type": "module",
   "scripts": {
     "build": "next build",
@@ -23,6 +35,7 @@
   },
   "dependencies": {
     "@auth/drizzle-adapter": "^1.7.2",
+    "@hookform/resolvers": "^5.0.1",
     "@libsql/client": "^0.14.0",
     "@radix-ui/react-slot": "^1.2.0",
     "@t3-oss/env-nextjs": "^0.12.0",

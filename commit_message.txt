@@ -1,0 +1,12 @@
+Refactor: Align subscriptions schema with verificationTokens
+
+feat: Document project and add metadata
+
+This commit introduces documentation and metadata for the project:
+
+- Created `README.md` with a project overview, features, technologies, setup instructions, and other relevant information.
+- Created `CONTRIBUTING.md` to provide guidelines for contributing to the project.
+- Created `LICENSE` file to apply the MIT license.
+- Added metadata, including repository and issues links, to `package.json` for improved project discoverability and clarity.
+
+This significantly enhances the project's documentation and provides a clear path for contributors.

@@ -1,4 +1,10 @@
 {
     "IDX.aI.enableInlineCompletion": true,
-    "IDX.aI.enableCodebaseIndexing": true
+    "IDX.aI.enableCodebaseIndexing": true,
+    "search.exclude": {
+        "**/node_modules": true,
+        "**/tmp": true,
+        "**/bower_components": true,
+        "**/*.code-search": true
+    }
 }
