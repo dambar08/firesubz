@@ -14,58 +14,209 @@ import SubscriptionForm from "@/components/SubscriptionForm";
 import { getSubscriptions } from "@/lib/subscriptions";
 import { createSubscription } from "./actions";
 import { DialogDescription } from "@/components/ui/dialog";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Slider } from "@/components/ui/slider";
+import { Filter } from "lucide-react";
+import { Button as ButtonUI } from "@/components/ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+
 export default function SubscriptionTracker() {
   const [allSubscriptions, setAllSubscriptions] = useState<
     typeof subscriptions._.inferSelect[]
   >([]);
+  const [selectedCategory, setSelectedCategory] = useState<string[]>([]);
+
+
+  const [selectedCurrency, setSelectedCurrency] = useState<string | null>(null);
+  const [selectedFrequency, setSelectedFrequency] = useState<string | null>(null);
+  const [open, setOpen] = useState(false);
+  const [openCategory, setOpenCategory] = useState(false);
+
+  const [priceRange, setPriceRange] = useState<number[]>([0, 100000]);
 
   useEffect(() => {
     getSubscriptions().then(setAllSubscriptions);
   }, []);
 
+  const handlePriceRangeChange = (values: number[]) => {
+  if (values.length === 2) {
+    setPriceRange(values);
+  }
+};
+
+  const filteredSubscriptions = allSubscriptions.filter((subscription) => {
+  const categoryMatch =
+    selectedCategory.length > 0
+      ? selectedCategory.includes(subscription.category)
+      : true;
+  const currencyMatch = selectedCurrency
+    ? subscription.currency === selectedCurrency
+    : true;
+  const frequencyMatch = selectedFrequency
+    ? subscription.frequency === selectedFrequency
+    : true;
+  const priceMatch =
+    subscription.price >= priceRange[0] && subscription.price <= priceRange[1];
+  return categoryMatch && currencyMatch && frequencyMatch && priceMatch;
+  });
+
+  const categories = [
+    "sports",
+    "news",
+    "entertainment",
+    "lifestyle",
+    "technology",
+    "finance",
+    "politics",
+    "other",
+  ];
+
   return (
-    <div className="container mx-auto py-10">
+    <div className="container mx-auto py-10 ">
       <h1 className="text-3xl font-bold text-center mb-8">
         Subscription Tracker
       </h1>
-      <Dialog>
-        <DialogTrigger asChild>
-          <Button>New Subscription</Button>
-        </DialogTrigger>
-        <DialogContent className="sm:max-w-[425px]">
-          <DialogHeader>
-            <DialogTitle>Add subscription</DialogTitle>
-            <DialogDescription>Add a new subscription.</DialogDescription>
-          </DialogHeader>
-          <SubscriptionForm
-             onSubmit={async (data) => {
-              try {
-                await createSubscription(data);
-                getSubscriptions().then(setAllSubscriptions);
-              } catch (error) {
-                console.error("Error creating subscription:", error);
-              } finally {
-                // Optionally, close the dialog here if needed
-                // For example, if you're using a state to control the dialog's open/close state
-              }
-            }}
-          />
-        </DialogContent>
-      </Dialog>
-      <div className="space-y-4">       
-        {allSubscriptions.map((subscription) => (
-          <div
-            key={subscription.id}
-            className="bg-white p-6 rounded-lg shadow-md"
-          >
+      <div className="flex items-center mt-6 mb-4">
+        <Popover open={openCategory} onOpenChange={setOpenCategory}>
+          <PopoverTrigger asChild>
+            <Button variant="outline">Filter by Category</Button>
+          </PopoverTrigger>
+          <PopoverContent align="start" className="w-80">
+            <div className="space-y-2"> <h4 className="font-medium leading-none">Category</h4>
+                <div className="flex flex-wrap gap-2">
+                {categories.map((category) => (
+                    <div key={category} className="flex items-center space-x-2">
+                      <Checkbox
+                        id={category}
+                        checked={selectedCategory.includes(category)}
+                        onCheckedChange={(checked) => {
+                          if (checked) {
+                            setSelectedCategory([...selectedCategory, category]);
+                          } else {
+                            setSelectedCategory(
+                              selectedCategory.filter((c) => c !== category),
+                            );
+                          }
+                        }}
+                      />
+                      <Label htmlFor={category}>{category}</Label>
+                    </div>
+                  ))}
+                </div>
+              
+            </div>
+          </PopoverContent>
+        </Popover>
+
+        <div className="ml-2">
+          <Popover open={open} onOpenChange={setOpen}>
+          <PopoverTrigger asChild>
+              <Button variant="outline" className="p-2"><Filter /></Button>
+          </PopoverTrigger>
+          <PopoverContent align="end" className="w-80">
+
+            <div className="grid gap-4">
+              <div className="space-y-2">
+                <h4 className="font-medium leading-none">Currency</h4>
+                <div className="flex flex-wrap gap-2">
+                  {["USD", "EUR", "GBP"].map((currency) => (
+                    <ButtonUI
+                      variant={
+                        selectedCurrency === currency ? "default" : "outline"
+                      }
+                      key={currency}
+                      onClick={() =>
+                        setSelectedCurrency((prev) =>
+                          prev === currency ? null : currency,
+                        )
+                      }
+                      className="w-full justify-start px-3 py-1 text-sm"
+                    >
+                      {currency}
+                    </ButtonUI>
+                  ))}
+                </div>
+              </div>
+              <div className="space-y-2">
+                <h4 className="font-medium leading-none">Frequency</h4>
+                <div className="flex flex-wrap gap-2">
+                  {["daily", "weekly", "monthly", "yearly"].map((frequency) => (
+                    <ButtonUI
+                      variant={
+                        selectedFrequency === frequency ? "default" : "outline"
+                      }
+                      key={frequency}
+                      onClick={() =>
+                        setSelectedFrequency((prev) =>
+                          prev === frequency ? null : frequency,
+                        )
+                      }
+                      className="w-full justify-start px-3 py-1 text-sm"
+                    >
+                      {frequency}
+                    </ButtonUI>
+                  ))}
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <h4 className="font-medium leading-none">Price Range</h4>
+                <div className="w-full">
+                  <Slider defaultValue={[0,100000]} max={100000} step={10} onValueChange={handlePriceRangeChange} />
+                  <div className="text-sm mt-2">Range: {priceRange[0]} - {priceRange[1]}</div>
+                </div>
+              </div>
+            </div>
+
+          </PopoverContent>
+        </Popover>
+        </div>
+        <div className="ml-auto">
+        <Dialog>
+          <DialogTrigger asChild>
+            <Button>New Subscription</Button>
+          </DialogTrigger>
+          <DialogContent className="sm:max-w-[425px]">
+            <DialogHeader>
+              <DialogTitle>Add subscription</DialogTitle>
+              <DialogDescription>Add a new subscription.</DialogDescription>
+            </DialogHeader>
+            <SubscriptionForm
+              onSubmit={async (data) => {
+                try {
+                  await createSubscription(data);
+                  getSubscriptions().then(setAllSubscriptions);
+                } catch (error) {
+                  console.error("Error creating subscription:", error);
+                } finally {
+                  // Optionally, close the dialog here if needed
+                  // For example, if you're using a state to control the dialog's open/close state
+                }
+              }}
+            />
+          </DialogContent>
+        </Dialog>
+        </div>
+      </div>
+
+      <div className="space-y-4">
+        {filteredSubscriptions.map((subscription) => (
+          <div key={subscription.id} className="bg-white p-6 rounded-lg shadow-md">
             <div className="flex justify-between items-center">
               <div>
                 <h2 className="text-xl font-semibold text-gray-800">
                   {subscription.name}
                 </h2>
-                <p className="text-gray-600">
-                  Category: {subscription.category}
-                </p>
+                <p className="text-gray-600">Category: {subscription.category}</p>
               </div>
               <div className="text-right">
                 <p className="font-bold text-gray-800">
@@ -86,4 +237,4 @@ export default function SubscriptionTracker() {
       </div>
     </div>
   );
-}
+};
