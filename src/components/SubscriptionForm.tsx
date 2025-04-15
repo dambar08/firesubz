@@ -45,9 +45,14 @@ const SubscriptionForm: React.FC<SubscriptionFormProps> = ({ onSubmit }) => {
   const form = useForm<SubscriptionFormValues>({
     resolver: zodResolver(subscriptionSchema),
     defaultValues: {
+      name: "",
+      price: 0,
       currency: "USD",
+      frequency: "daily",
+      category: "sports",
+      paymentMethod: "",
       status: "active",
-      price: 0
+      startDate: new Date(),
     }
   });
 
