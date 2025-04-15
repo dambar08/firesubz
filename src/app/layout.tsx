@@ -1,6 +1,5 @@
 import "@/styles/globals.css";
 
-import Sidebar from "@/components/Sidebar";
 import { SessionProvider } from "next-auth/react";
 import { type Metadata } from "next";
 import { Geist } from "next/font/google";
@@ -23,9 +22,8 @@ export default function RootLayout({
     <SessionProvider>
       <html lang="en" className={`${geist.variable}`}>
         <body className="flex">
-          <Sidebar />
           <main className="flex-1">{children}</main>
-          
+
         </body>
       </html>
     </SessionProvider>

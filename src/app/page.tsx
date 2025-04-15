@@ -5,10 +5,23 @@ import { Button } from "@/components/ui/button";
 
 export default function HomePage() {
   const {data: session } = useSession();
-  return (
-    <main className="bg-gray-100 min-h-screen">
+   return (
+     <main className="bg-gray-100 min-h-screen">
+      {/* Header Section */}
+      <header className="bg-white shadow-md py-4 px-6 flex justify-between items-center">
+        <div className="flex items-center space-x-4">
+          <Link
+            href="/dashboard"
+            className="text-blue-500 hover:text-blue-700"
+          >
+            Getting Started
+          </Link>
+        </div>
+        {/* Login Button */}
+        {session ? <Button onClick={() => signOut()}>Logout</Button> : <Button onClick={() => signIn()}>Login</Button>}
+      </header>
       {/* Hero Section - Clean and Minimal */}
-      <section className="bg-white py-20 px-4 text-center">
+       <section className="bg-white py-20 px-4 text-center">
         <div className="container mx-auto max-w-4xl">
           <h1 className="text-5xl font-bold text-gray-900 mb-4">
             Simplify Your Subscriptions
@@ -83,10 +96,8 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-      <section className="bg-gray-100 py-16 px-4 flex justify-center">
-      {session ? <Button onClick={() => signOut()}>Logout</Button> : 
-        <Button onClick={() => signIn()}>Login</Button>}
-      </section>
+       {/* Login Button */}
     </main>
   );
 }
+
