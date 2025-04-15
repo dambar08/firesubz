@@ -1,75 +1,91 @@
-"use client"
-import { signIn } from "next-auth/react";
+"use client";
+import { signIn, signOut, useSession } from "next-auth/react"
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
 export default function HomePage() {
+  const {data: session } = useSession();
   return (
-    <main className="bg-gradient-to-b from-[#2e026d] to-[#15162c] min-h-screen text-white">
-      {/* Hero Section */}
-      <section className="container flex flex-col items-center justify-center gap-6 px-4 py-24 text-center md:py-40">
-        <div className="max-w-3xl">
-          <h1 className="text-5xl font-extrabold tracking-tight text-white sm:text-6xl md:text-7xl">
-            Subscription Tracker
+    <main className="bg-gray-100 min-h-screen">
+      {/* Hero Section - Clean and Minimal */}
+      <section className="bg-white py-20 px-4 text-center">
+        <div className="container mx-auto max-w-4xl">
+          <h1 className="text-5xl font-bold text-gray-900 mb-4">
+            Simplify Your Subscriptions
           </h1>
-          <p className="text-lg text-gray-300 md:text-xl mt-4">
-            Effortlessly manage all your subscriptions in one place. Keep track
-            of upcoming payments, plan details, and more.
+          <p className="text-xl text-gray-600 mb-8">
+            Take control of your recurring payments. Our subscription tracker
+            helps you manage, track, and analyze your subscriptions with ease.
           </p>
-          <div className="mt-8 flex gap-4">
-            <Button
-              className="bg-white text-black hover:bg-gray-100"
-              onClick={() => signIn()}
-            >
-              Get Started
-            </Button>
-            <Button onClick={() => signIn()}>Login</Button>
+          <Button className="bg-blue-500 text-white hover:bg-blue-600">
+            <Link href="/dashboard">
+              Start Tracking Today
+            </Link>
+          </Button>
+        </div>
+      </section>
+
+      {/* Key Features Section - Grid Layout */}
+      <section className="bg-gray-100 py-16 px-4">
+        <div className="container mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {/* Manage Subscriptions */}
+            <div className="bg-white p-6 rounded-lg shadow-md">
+              <h3 className="text-xl font-semibold text-gray-800 mb-2">
+                Effortless Management
+              </h3>
+              <p className="text-gray-600">
+                Keep all your subscriptions organized in one convenient place.
+              </p>
+            </div>
+
+            {/* Track Payments */}
+            <div className="bg-white p-6 rounded-lg shadow-md">
+              <h3 className="text-xl font-semibold text-gray-800 mb-2">
+                Payment Tracking
+              </h3>
+              <p className="text-gray-600">
+                Never miss a payment with automatic reminders and clear payment
+                histories.
+              </p>
+            </div>
+
+            {/* Analyze Spending */}
+            <div className="bg-white p-6 rounded-lg shadow-md">
+              <h3 className="text-xl font-semibold text-gray-800 mb-2">
+                Spending Insights
+              </h3>
+              <p className="text-gray-600">
+                Gain valuable insights into your subscription spending habits.
+              </p>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Efficiency Section */}
-      <section className="container px-4 py-16 md:py-24">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-          <div>
-            <h2 className="text-3xl font-bold text-white">
-              Maximize Efficiency
-            </h2>
-            <p className="text-gray-300 mt-4">
-              Streamline your subscription management process. Our platform
-              automates reminders and renewals, ensuring you never miss a beat.
-            </p>
-          </div>
-          {/* Placeholder for Image */}
-          <div className="bg-gray-700 h-64 rounded-lg"></div>
-        </div>
-      </section>
-
-      {/* Customer Control Section */}
-      <section className="container px-4 py-16 md:py-24">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-          {/* Placeholder for Image */}
-          <div className="bg-gray-700 h-64 rounded-lg"></div>
-          <div>
-            <h2 className="text-3xl font-bold text-white">
-              Customer Control
-            </h2>
-            <p className="text-gray-300 mt-4">
-              Give your customers the power to manage their subscriptions with
-              ease. Customizable plans and self-service options reduce support
-              overhead.
-            </p>
+      {/* More Features - Concise Highlights */}
+      <section className="bg-gray-100 py-16 px-4">
+        <div className="container mx-auto text-center max-w-3xl">
+          <h2 className="text-3xl font-bold text-gray-900 mb-6">
+            Unlock More Benefits
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="bg-white p-4 rounded-lg shadow-md">
+              <p className="text-gray-700">
+                Customizable categories for organizing subscriptions.
+              </p>
+            </div>
+            <div className="bg-white p-4 rounded-lg shadow-md">
+              <p className="text-gray-700">
+                Clear overviews of upcoming renewals and cancellations.
+              </p>
+            </div>
           </div>
         </div>
       </section>
-
-      {/* Sales and Analysis Section */}
-      <section className="container px-4 py-16 md:py-24 text-center">
-        <h2 className="text-3xl font-bold text-white">Boost Sales & Analyze</h2>
-        <p className="text-gray-300 mt-4 max-w-2xl mx-auto">
-          Optimize your pricing and plan offerings with detailed insights into
-          customer behavior. Our analytics tools help you drive sales and
-          improve customer retention.
-        </p>
+      <section className="bg-gray-100 py-16 px-4 flex justify-center">
+      {session ? <Button onClick={() => signOut()}>Logout</Button> : 
+        <Button onClick={() => signIn()}>Login</Button>}
       </section>
     </main>
   );
