@@ -1,3 +1,4 @@
+"use client";
 // src/components/SubscriptionForm.tsx`
 import { useState } from "react";
 import { z } from "zod";
@@ -20,20 +21,18 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+import { cn } from "@/lib/utils";
+import { format } from "date-fns";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 
-const subscriptionSchema = z.object({
+
+import { Calendar } from "@/components/ui/calendar";
+
+export const subscriptionSchema = z.object({
   name: z.string().max(100, "Name must be 100 characters or less").min(1, "Name is required"),
-  price: z.number({ required_error: "Price is required", invalid_type_error: "Price must be a number" }).positive("Price must be positive"),
+  price: z.number({ required_error: "Price is required", invalid_type_error: "Price must be a number" }).nonnegative("Price must be non negative"),
   currency: z.enum(["USD", "EUR", "GBP"], { required_error: "Currency is required" }).default("USD"),
-  frequency: z.enum(["daily", "weekly", "monthly", "yearly"], { required_error: "Frequency is required" }),
+  frequency: z.enum(["daily", "weekly", "monthly", "yearly", "one-time"], { required_error: "Frequency is required" }),
   category: z.enum(["sports", "news", "entertainment", "lifestyle", "technology", "finance", "politics", "other"], { required_error: "Category is required" }),
   paymentMethod: z.string({ required_error: "Payment method is required" }).min(1, "Payment method is required"),
   status: z.enum(["active", "cancelled", "expired"], { required_error: "Status is required" }).default("active"),
@@ -151,6 +150,7 @@ const SubscriptionForm: React.FC<SubscriptionFormProps> = ({ onSubmit }) => {
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
+                  <SelectItem value="one-time">One-time</SelectItem>
                   <SelectItem value="daily">Daily</SelectItem>
                   <SelectItem value="weekly">Weekly</SelectItem>
                   <SelectItem value="monthly">Monthly</SelectItem>
@@ -201,7 +201,29 @@ const SubscriptionForm: React.FC<SubscriptionFormProps> = ({ onSubmit }) => {
               <FormMessage />
             </FormItem>
           )}
-        />
+          />
+         <FormField
+            control={form.control}
+            name="startDate"
+            render={({ field }) => (
+              <FormItem className="flex flex-col">
+                <FormLabel>Start Date</FormLabel>
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <FormControl>
+                      <Button variant={"outline"} className={cn("w-[240px] pl-3 text-left font-normal", !field.value && "text-muted-foreground")}>
+                        {field.value ? format(field.value, "PPP") : <span>Pick a date</span>}
+                      </Button>
+                    </FormControl>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-auto p-0" align="start">
+                    <Calendar mode="single" selected={field.value} onSelect={field.onChange} initialFocus />
+                  </PopoverContent>
+                </Popover>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
         <Button type="submit">Add Subscription</Button>
       </form>
     </Form>

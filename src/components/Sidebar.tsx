@@ -21,20 +21,21 @@ const Sidebar = () => {
   const [open, setOpen] = useState(false);
   const [isExpanded, setIsExpanded] = useState(true);
 
-  const toggleSidebar = () => {
-    useEffect(() => {
-      const handleKeyDown = (event: KeyboardEvent) => {
-        if ((event.ctrlKey || event.metaKey) && event.key === 'k') {
-          event.preventDefault();
-          setOpen(!open);
-        }
-      };
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if ((event.ctrlKey || event.metaKey) && event.key === 'k') {
+        event.preventDefault();
+        setOpen(!open);
+      }
+    };
 
-      window.addEventListener('keydown', handleKeyDown);
-      return () => {
-        window.removeEventListener('keydown', handleKeyDown);
-      };
-    }, [open]);
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [open]);
+
+  const toggleSidebar = () => {
     setIsExpanded(!isExpanded);
   };
   const handleKeyDown = useCallback((event: KeyboardEvent) => {
@@ -52,27 +53,6 @@ const Sidebar = () => {
     <aside
       className={`fixed left-0 top-0 h-full bg-gray-100 p-4 transition-all duration-300 shadow-md ${isExpanded ? 'w-64' : 'w-16'
         }`} >
-      {isExpanded && (
-        
-      <div className="mb-4">
-        <Dialog open={open} onOpenChange={setOpen}>
-          <DialogTrigger asChild>
-            <button className="w-full px-3 py-2 rounded-md bg-gray-200 hover:bg-gray-300 focus:outline-none flex items-center gap-2">
-              <Search className="h-4 w-4" />
-              {isExpanded && (
-                <><span>Search</span>
-                  <kbd className="ml-auto rounded-md border border-gray-300 bg-gray-100 px-1.5 font-mono text-[0.7rem] font-medium text-gray-800"> <Command className='inline-block w-3 h-3 mr-1' />K</kbd></>
-              )}
-            </button>           
-          </DialogTrigger>
-          <DialogContent className="sm:max-w-[425px] ">
-            <div className="p-4 bg-white">
-              {/* Add your search input here */}
-              <input type="text" placeholder="Search..." className="w-full px-3 py-2 border border-gray-300 rounded-md" />
-            </div>
-          </DialogContent>
-        </Dialog>
-      </div>) }
       <div className="flex justify-between items-center mb-4">
         <button onClick={toggleSidebar} className="focus:outline-none">
           {isExpanded ? (
@@ -85,6 +65,31 @@ const Sidebar = () => {
       <nav className="">
 
         <ul className="">
+          <li className="mb-2">
+            {isExpanded && (
+
+              <div className="mb-4">
+                <Dialog open={open} onOpenChange={setOpen}>
+                  <DialogTrigger asChild>
+                    <button className="w-full px-3 py-2 rounded-md bg-gray-200 hover:bg-gray-300 focus:outline-none flex items-center gap-2">
+                      <Search className="h-4 w-4" />
+                      {isExpanded && (
+                        <>
+                          <span>Search</span>
+                          <kbd className="ml-auto rounded-md border border-gray-300 bg-gray-100 px-1.5 font-mono text-[0.7rem] font-medium text-gray-800"> <Command className='inline-block w-3 h-3 mr-1' />K</kbd>
+                        </>
+                      )}
+                    </button>
+                  </DialogTrigger>
+                  <DialogContent className="sm:max-w-[425px] ">
+                    <div className="p-4 bg-white">
+                      {/* Add your search input here */}
+                      <input type="text" placeholder="Search..." className="w-full px-3 py-2 border border-gray-300 rounded-md" />
+                    </div>
+                  </DialogContent>
+                </Dialog>
+              </div>)}
+          </li>
           <li className="mb-2">
             <Link
               href="/dashboard"

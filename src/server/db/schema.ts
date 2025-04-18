@@ -113,7 +113,7 @@ export const subscriptions = createTable(
     name: d.varchar({ length: 100 }).notNull(),
     price: d.real().notNull(),
     currency: d.text({ enum: ['USD', 'EUR', 'GBP'] }).default('USD'),
-    frequency: d.text({ enum: ['daily', 'weekly', 'monthly', 'yearly'] }),
+    frequency: d.text({ enum: ['daily', 'weekly', 'monthly', 'yearly','one-time'] }).default('one-time'),
     category: d.text({ enum: ['sports', 'news', 'entertainment', 'lifestyle', 'technology', 'finance', 'politics', 'other'] }).notNull(),
     paymentMethod: d.text().notNull(),
     status: d.text({ enum: ['active', 'cancelled', 'expired'] }).default('active'),
