@@ -8,7 +8,7 @@ import { z } from "zod";
 
 const subscriptionSchema = z.object({
   name: z.string().max(100),
-  price: z.number().positive(),
+  price: z.number().nonnegative(),
   currency: z.enum(["USD", "EUR", "GBP"]).default("USD"),
   frequency: z.enum(["daily", "weekly", "monthly", "yearly"]).optional(),
   category: z.enum(["sports", "news", "entertainment", "lifestyle", "technology", "finance", "politics", "other"]),
@@ -37,8 +37,8 @@ export async function createSubscription(data: z.infer<typeof subscriptionSchema
     await db.insert(subscriptions).values({
       ...rest,
       userId: session.user.id,
-      startDate: startDate.getTime(), // Convert to timestamp
-      renewalDate: renewalDate?.getTime(), // Convert to timestamp or null
+      startDate: startDate, // Pass Date object directly
+      renewalDate: renewalDate, // Pass Date object directly or null
     });
     revalidatePath("/dashboard/subscriptions");
     return { success: "Subscription created successfully" };
