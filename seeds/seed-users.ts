@@ -1,6 +1,6 @@
-import * as schema from "./src/server/db/schema";
-import { db } from "./src/server/db";
-import { env } from "./src/env";
+import * as schema from "../src/server/db/schema";
+import { db } from "../src/server/db";
+import { env } from "../src/env";
 import crypto from "crypto";
 import ws from 'ws';
 import { neonConfig } from "@neondatabase/serverless"
