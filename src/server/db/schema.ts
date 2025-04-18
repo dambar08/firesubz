@@ -124,14 +124,13 @@ export const subscriptions = createTable(
       .notNull()
       .references(() => users.id),
   }),
-  (t) => ({
-    nameIdx: index('subscription_name_idx').on(t.name),
-    priceIdx: index('price_idx').on(t.price),
-    startDateIdx: index('start_date_idx').on(t.startDate),
-    renewalDateIdx: index('renewal_date_idx').on(t.renewalDate),
-  })
+  (t) => ([
+    index('subscription_name_idx').on(t.name),
+    index('price_idx').on(t.price),
+    index('start_date_idx').on(t.startDate),
+    index('renewal_date_idx').on(t.renewalDate),
+  ])
 );
-
 
 export const subscriptionRelations = relations(subscriptions, ({ one }) => ({
   user: one(users, { fields: [subscriptions.userId], references: [users.id] }),
@@ -146,13 +145,13 @@ export const notifications = createTable("notifications", (d) => ({
   title: d.varchar({ length: 255 }).notNull(),
   message: d.text().notNull(),
   createdAt: d.timestamp({ withTimezone: true }).defaultNow().notNull(),
-  read: d.boolean().default(false).notNull(),
+  readAt: d.timestamp({ withTimezone: true }),
   type: d.varchar({ length: 50 }),
-}), (t) => ({
-  userIdIdx: index("idx_notifications_user_id").on(t.userId),
-  createdAtIdx: index("idx_notifications_created_at").on(t.createdAt),
-  userIdReadIdx: index("idx_notifications_user_id_read").on(t.userId, t.read),
-}));
+}), (t) => ([
+  index("idx_notifications_user_id").on(t.userId),
+  index("idx_notifications_created_at").on(t.createdAt),
+  index("idx_notifications_user_id_read").on(t.userId, t.readAt),
+]));
 
 export const notificationsRelations = relations(notifications, ({ one }) => ({
   user: one(users, {
