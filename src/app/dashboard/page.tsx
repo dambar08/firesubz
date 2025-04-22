@@ -9,6 +9,7 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
+import { ListChecks, CheckCircleIcon, DollarSign } from 'lucide-react';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
@@ -21,19 +22,19 @@ export default function DashboardPage() {
           <h2 className="mb-2 text-lg font-semibold text-gray-700">
             Total Subscriptions
           </h2>
-          {/* Icon or visual element here */}
+          <ListChecks className="mb-2 h-8 w-8 text-blue-500" />
           <span className="text-3xl font-bold text-blue-500">120</span>
         </div>
         <div className="flex flex-col items-center justify-center rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
           <h2 className="mb-2 text-lg font-semibold text-gray-700">
             Active Subscriptions
           </h2>
-          {/* Icon or visual element here */}
+          <CheckCircleIcon className="mb-2 h-8 w-8 text-green-500" />
           <span className="text-3xl font-bold text-green-500">105</span>
         </div>
         <div className="flex flex-col items-center justify-center rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
           <h2 className="mb-2 text-lg font-semibold text-gray-700">MRR</h2>
-          {/* Icon or visual element here */}
+          <DollarSign className="mb-2 h-8 w-8 text-indigo-500" />
           <span className="text-3xl font-bold text-indigo-500">$5,500</span>
         </div>
       </div>
