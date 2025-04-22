@@ -23,7 +23,7 @@ export default function RootLayout({
     <SessionProvider>
       <html lang="en" className={`${geist.variable}`}>
         <body className="flex">
-          <PageLoadProgressBar /> {/* Add the progress bar component here */}
+          <PageLoadProgressBar />
           <main className="flex-1">{children}</main>
         </body>
       </html>
