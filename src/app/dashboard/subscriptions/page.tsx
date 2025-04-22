@@ -38,8 +38,8 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination";
 import { cn } from "@/lib/utils";
-import { format } from "date-fns"; // Import date-fns format
-import { DateRange } from "react-day-picker"; // Import DateRange type
+import { format } from "date-fns";
+import { type DateRange } from "react-day-picker"; 
 
 // Define the type for a single subscription based on the schema
 type Subscription = typeof subscriptions._.inferSelect;
