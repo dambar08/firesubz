@@ -159,3 +159,8 @@ export const notificationsRelations = relations(notifications, ({ one }) => ({
     references: [users.id],
   }),
 }));
+
+export type Notification = typeof notifications.$inferSelect;
+export type Subscription = typeof subscriptions.$inferSelect;
+export type Account = typeof accounts.$inferSelect;
+export type User = typeof users.$inferSelect;
