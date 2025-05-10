@@ -9,11 +9,14 @@ import {
   Settings,
   Search,
   Command,
+  Bell,
 } from 'lucide-react';
 import { FileText } from 'lucide-react';
 import {
   Dialog,
   DialogContent,
+  DialogHeader,
+  DialogTitle,
   DialogTrigger
 } from '@/components/ui/dialog';
 
@@ -51,9 +54,9 @@ const Sidebar = () => {
 
   return (
     <aside
-      className={`fixed left-0 top-0 h-full bg-gray-100 p-4 transition-all duration-300 shadow-md ${isExpanded ? 'w-64' : 'w-16'
+      className={`left-0 top-0 h-full bg-gray-100 p-4 transition-all duration-300 shadow-md ${isExpanded ? 'w-64' : 'w-16'
         }`} >
-      <div className="flex justify-between items-center mb-4">
+      <div className="flex justify-between items-center mb-4 hidden">
         <button onClick={toggleSidebar} className="focus:outline-none">
           {isExpanded ? (
             <X className="h-6 w-6" />
@@ -82,6 +85,9 @@ const Sidebar = () => {
                     </button>
                   </DialogTrigger>
                   <DialogContent className="sm:max-w-[425px] ">
+                    <DialogHeader>
+                      <DialogTitle></DialogTitle>
+                    </DialogHeader>
                     <div className="p-4 bg-white">
                       {/* Add your search input here */}
                       <input type="text" placeholder="Search..." className="w-full px-3 py-2 border border-gray-300 rounded-md" />
@@ -121,6 +127,17 @@ const Sidebar = () => {
               <div className='flex items-center gap-2'>
                 <FileText className={`h-4 w-4`} style={!isExpanded ? { margin: '0 auto' } : {}} />
                 {isExpanded && <span className="ml-2">Reports</span>}
+              </div>
+            </Link>
+          </li>
+          <li className="mb-2">
+            <Link
+              href="/dashboard/notifications"
+              className={`block py-2 px-4 hover:bg-gray-200 rounded ${!isExpanded && 'text-center'}`}
+            >
+              <div className='flex items-center gap-2'>
+                <Bell className={`h-4 w-4`} style={!isExpanded ? { margin: '0 auto' } : {}} />
+                {isExpanded && <span className="ml-2">Notifications</span>}
               </div>
             </Link>
           </li>

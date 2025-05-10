@@ -9,6 +9,9 @@ const headingVariants = cva("font-bold tracking-tight", {
       h1: "text-4xl md:text-5xl lg:text-6xl",
       h2: "text-3xl md:text-4xl",
       h3: "text-2xl md:text-3xl",
+      h4: "text-xl md:text-2xl",
+      h5: "text-lg md:text-xl",
+      h6: "text-base md:text-lg",
     },
   },
   defaultVariants: {
@@ -59,6 +62,46 @@ const H3 = React.forwardRef<HTMLHeadingElement, HeadingProps>(
 );
 H3.displayName = "H3";
 
+const H4 = React.forwardRef<HTMLHeadingElement, HeadingProps>(
+  ({ className, size, ...props }, ref) => {
+    return (
+      <h4
+        className={cn(headingVariants({ size: "h4" }), className)}
+        ref={ref}
+        {...props}
+      />
+    );
+  },
+);
+H4.displayName = "H4";
+
+const H5 = React.forwardRef<HTMLHeadingElement, HeadingProps>(
+  ({ className, size, ...props }, ref) => {
+    return (
+      <h5
+        className={cn(headingVariants({ size: "h5" }), className)}
+        ref={ref}
+        {...props}
+      />
+    );
+  },
+);
+H5.displayName = "H5";
+
+const H6 = React.forwardRef<HTMLHeadingElement, HeadingProps>(
+  ({ className, size, ...props }, ref) => {
+    return (
+      <h6
+        className={cn(headingVariants({ size: "h6" }), className)}
+        ref={ref}
+        {...props}
+      />
+    );
+  },
+);
+H6.displayName = "H6";
+
+
 const Paragraph = React.forwardRef<
   HTMLParagraphElement,
   React.HTMLAttributes<HTMLParagraphElement>
@@ -70,4 +113,4 @@ const Paragraph = React.forwardRef<
   />
 ));
 Paragraph.displayName = "Paragraph";
-export { H1, H2, H3, Paragraph };
+export { H1, H2, H3, H4, H5, H6, Paragraph };

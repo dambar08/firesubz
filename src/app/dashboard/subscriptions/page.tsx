@@ -179,11 +179,8 @@ export default function SubscriptionTracker() {
 
   return (
     <div className="container mx-auto py-10">
-      <h1 className="text-3xl font-bold text-center mb-8">
-        Subscription Tracker
-      </h1>
       {/* Filters Row */}
-      <div className="flex flex-wrap items-center gap-2 mt-6 mb-4">
+      <div className="flex flex-wrap items-center gap-2 mt-6 mb-4 px-8">
         {/* Category Filter */}
         <Popover open={openCategoryPopover} onOpenChange={setOpenCategoryPopover}>
           <PopoverTrigger asChild>

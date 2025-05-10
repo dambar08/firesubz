@@ -26,10 +26,12 @@ declare module "next-auth" {
     } & DefaultSession["user"];
   }
 
-  // interface User {
-  //   // ...other properties
-  //   // role: UserRole;
-  // }
+  interface User {
+    // ...other properties
+    role: UserRole;
+  }
+
+  type UserRole = 'user' | 'admin';
 }
 
 /**
@@ -77,8 +79,10 @@ export const authConfig = {
   callbacks: {
     session: ({ session, user }) => ({
       ...session,
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       user: {
         ...session.user,
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         id: user.id,
       },
     }),

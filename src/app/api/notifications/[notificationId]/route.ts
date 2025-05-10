@@ -16,7 +16,7 @@ export async function PATCH(
   }
 
   if (isNaN(notificationId)) {
-     return NextResponse.json({ error: "Invalid notification ID" }, { status: 400 });
+    return NextResponse.json({ error: "Invalid notification ID" }, { status: 400 });
   }
 
   try {
@@ -46,5 +46,39 @@ export async function PATCH(
   } catch (error) {
     console.error("Error updating notification:", error);
     return NextResponse.json({ error: "Failed to update notification" }, { status: 500 });
+  }
+}
+
+
+export async function DELETE(
+  request: Request,
+  { params }: { params: { notificationId: string } }
+) {
+  const session = await auth();
+
+  if (!session || !session.user || !session.user.id) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  const notificationId = parseInt(params.notificationId, 10);
+  if (isNaN(notificationId)) {
+    return NextResponse.json({ error: "Invalid notification ID" }, { status: 400 });
+  }
+  try {
+    // Find the notification to ensure it belongs to the user and exists
+    const existingNotification = await db.query.notifications.findFirst({
+      where: and(
+        eq(notifications.id, notificationId),
+        eq(notifications.userId, session.user.id)
+      ),
+    });
+    if (!existingNotification) {
+      return NextResponse.json({ error: "Notification not found or access denied" }, { status: 404 });
+    }
+    await db.delete(notifications).where(eq(notifications.id, notificationId))
+    return NextResponse.json({ success: true });
+  } catch (error) {
+    console.error("Error deleting notification:", error);
+    return NextResponse.json({ error: "Failed to delete notification" }, { status: 500 });
   }
 }

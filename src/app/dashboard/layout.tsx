@@ -17,7 +17,7 @@ export default async function DashboardLayoutServer({
       <Sidebar />
       <main className="flex-1 flex flex-col">
         <DashboardHeaderServer/>
-        <div className="flex-1">{children}</div>
+        <div className="flex-1 overflow-auto ">{children}</div>
       </main>
     </div>
   );

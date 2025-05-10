@@ -1,5 +1,6 @@
 import { neonConfig, Pool } from '@neondatabase/serverless';
 import { drizzle } from "drizzle-orm/neon-serverless";
+import ws from 'ws';
 
 import { env } from "@/env";
 import * as schema from "./schema";
@@ -13,7 +14,8 @@ const globalForDb = globalThis as unknown as {
 };
 
 // Enable connection pooling
-neonConfig.fetchConnectionCache = true;
+// neonConfig.fetchConnectionCache = true;
+// neonConfig.webSocketConstructor = ws;
 
 export const client =
   globalForDb.client ?? new Pool({ connectionString: env.DATABASE_URL });

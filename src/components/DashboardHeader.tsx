@@ -4,6 +4,8 @@ import React, { useState, useEffect } from "react"; // Added useEffect
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Bell, HelpCircle, User, Circle } from "lucide-react"; // Added Circle icon
 import { Button } from "@/components/ui/button";
+import { H4 } from "@/components/ui/typography";
+import Link from "next/link";
 import {
   Popover,
   PopoverContent,
@@ -17,6 +19,8 @@ import { DropdownMenu, DropdownMenuContent,
 } from '@/components/ui/dropdown-menu';
 import { Separator } from '@/components/ui/separator';
 import { cn } from "@/lib/utils"; // Import cn utility for cleaner class merging
+import { navigationMenuTriggerStyle } from "./ui/navigation-menu";
+import { useRouter } from "next/navigation";
 
 interface Notification {
   id: number;
@@ -30,6 +34,7 @@ const DashboardHeader = ({ userEmail }: { userEmail: string }) => {
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const navigate = useRouter();
 
   useEffect(() => {
     const fetchNotifications = async () => {
@@ -86,7 +91,7 @@ const DashboardHeader = ({ userEmail }: { userEmail: string }) => {
       <div className="ml-auto flex items-center space-x-2">
         <Popover>
           <PopoverTrigger asChild>
-            <Button variant="ghost" className="relative p-2"> {/* Added relative positioning */}
+            <Button variant="ghost" className="relative p-2">
               <Bell className="h-4 w-4"/>
               {/* Badge for unread count */}
               {notifications.filter(n => !n.readAt).length > 0 && (
@@ -97,9 +102,10 @@ const DashboardHeader = ({ userEmail }: { userEmail: string }) => {
               )}
             </Button>
           </PopoverTrigger>
-          <PopoverContent className="sm:max-w-md w-full max-h-[400px] p-0"> {/* Adjusted width */}
-            <div className="p-3 border-b"> {/* Adjusted padding */}
-              <h2 className="text-base font-semibold">Notifications</h2> {/* Adjusted font size */}
+          <PopoverContent className="sm:max-w-md w-full max-h-[400px] p-0">
+            <div className="p-3 border-b flex flex-row items-center justify between gap-4">
+              <H4 className="text-base font-semibold">Notifications</H4>
+              <Link href="/dashboard/notifications">View All</Link>
             </div>
             <ScrollArea className="h-[300px] w-full">
               {isLoading ? (
