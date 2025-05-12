@@ -1,6 +1,7 @@
 'use client';
 import Link from 'next/link';
 import { useState, useEffect, useCallback } from 'react';
+import ActionSearch from "@/components/ActionSearch";
 import {
   List,
   X,
@@ -91,6 +92,7 @@ const Sidebar = () => {
                     <div className="p-4 bg-white">
                       {/* Add your search input here */}
                       <input type="text" placeholder="Search..." className="w-full px-3 py-2 border border-gray-300 rounded-md" />
+                      <ActionSearch />
                     </div>
                   </DialogContent>
                 </Dialog>
