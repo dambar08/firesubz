@@ -54,6 +54,7 @@ export default function SubscriptionTracker() {
   const [selectedDateOption, setSelectedDateOption] = useState<string>("today");
   const [openFilterPopover, setOpenFilterPopover] = useState(false);
   const [openCategoryPopover, setOpenCategoryPopover] = useState(false);
+  const [openFormDialog, setOpenFormDialog] = useState(false);
   // Remove openCustomDateDialog state
   const [dateRange, setDateRange] = useState<DateRange | undefined>(undefined); // Use DateRange type
   const [priceRange, setPriceRange] = useState<number[]>([0, 100000]);
@@ -178,7 +179,7 @@ export default function SubscriptionTracker() {
   ];
 
   return (
-    <div className="container mx-auto py-10">
+    <div className="container mx-auto space-y-6 px-4 py-10">
       {/* Filters Row */}
       <div className="flex flex-wrap items-center gap-2 mt-6 mb-4 px-8">
         {/* Category Filter */}
@@ -364,7 +365,7 @@ export default function SubscriptionTracker() {
           )}
 
           {/* New Subscription Dialog */}
-          <Dialog>
+          <Dialog open={openFormDialog} onOpenChange={setOpenFormDialog}>
             <DialogTrigger asChild>
               <Button>New Subscription</Button>
             </DialogTrigger>
@@ -380,6 +381,7 @@ export default function SubscriptionTracker() {
                     const updatedSubscriptions = await getSubscriptions(); // Refetch
                     setAllSubscriptions(updatedSubscriptions); // Ensure this state update happens
                     setCurrentPage(1); // Go to first page after adding
+                    setOpenFormDialog(false);
                     // Close dialog on success - needs dialog state management if parent controls it
                   } catch (error) {
                     console.error("Error creating subscription:", error);

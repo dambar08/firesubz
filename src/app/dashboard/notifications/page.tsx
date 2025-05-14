@@ -3,6 +3,7 @@ import { auth } from "@/server/auth";
 import { db } from "@/server/db";
 import { unstable_noStore as noStore } from "next/cache";
 import NotificationTable from "../_components/notification-table";
+import type { NextPage } from "next";
 
 async function getNotifications(page: number) {
     noStore();
@@ -26,19 +27,18 @@ async function getNotifications(page: number) {
     return notifications;
 }
 
-export default async function Notifications({
+const NotificationsPage:NextPage<{searchParams: Promise<{page?: string}>}> = async ({
     searchParams,
-}: {
-    searchParams: { page: string };
-}) {
-    const page = searchParams?.page ? parseInt(searchParams.page) : 1;
-    const notifications: Notification[] = await getNotifications(page);
+}) => {
+    const { page } = await searchParams;
+    const notifications: Notification[] = await getNotifications(page ? Number.isNaN(parseInt(page)) ? 0: parseInt(page) : 0);
 
     return (
-        <div className="container mx-auto  py-10">
+        <div className="container mx-auto space-y-6 px-4 py-10">
             <NotificationTable notifications={notifications} />
         </div>
     );
 }
 
 
+export default NotificationsPage;
