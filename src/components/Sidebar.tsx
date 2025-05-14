@@ -20,6 +20,7 @@ import {
   DialogTitle,
   DialogTrigger
 } from '@/components/ui/dialog';
+import SubscriptionSearchInput from "@/components/SubscriptionSearchInput";
 
 const Sidebar = () => {
   const [open, setOpen] = useState(false);
@@ -85,14 +86,16 @@ const Sidebar = () => {
                       )}
                     </button>
                   </DialogTrigger>
-                  <DialogContent className="sm:max-w-[425px] ">
+                  <DialogContent className="sm:max-w-[425px] sm:max-w-[625px]">
                     <DialogHeader>
                       <DialogTitle></DialogTitle>
                     </DialogHeader>
-                    <div className="p-4 bg-white">
-                      {/* Add your search input here */}
+                    {/* <div className="p-4 bg-white">
                       <input type="text" placeholder="Search..." className="w-full px-3 py-2 border border-gray-300 rounded-md" />
                       <ActionSearch />
+                    </div> */}
+                    <div className="p-4 bg-white">
+                      <SubscriptionSearchInput />
                     </div>
                   </DialogContent>
                 </Dialog>

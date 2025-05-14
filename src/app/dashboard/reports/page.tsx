@@ -16,36 +16,38 @@ export default function ReportsPage() {
     <div className="container mx-auto space-y-6 px-4 py-10">
       <h1 className="text-3xl font-bold text-center mb-8">Reports</h1>
       <Card>
-         <CardHeader>
+        <CardHeader>
           <CardTitle>Generate Report</CardTitle>
         </CardHeader>
-         <CardContent>
+        <CardContent>
           <div className="space-y-4">
-            <div className="grid w-full max-w-sm items-center gap-1.5">
-              <Label htmlFor="reportType">Report Type</Label>
-              <Select >
-                <SelectTrigger id="reportType" className="w-[180px]">
-                <SelectValue placeholder="Select a report type" />
-              </SelectTrigger>
-              <SelectContent position="popper">
-                <SelectItem value="summary">Subscription Summary</SelectItem>
-              </SelectContent>
-               </Select>
-           </div>
-            <div className="grid w-full max-w-sm items-center gap-1.5">
-               <Label htmlFor="reportFormat">Report Format</Label>
-              <Select>
-                <SelectTrigger className='w-[180px]'>
-                  <SelectValue placeholder='Select format' />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value='pdf'>PDF</SelectItem>
-                  <SelectItem value='word'>Word</SelectItem>
-                  <SelectItem value='html'>HTML</SelectItem>
-                </SelectContent>
-              </Select>
+            <div className="flex flex-row gap-4">
+              <div className="grid max-w-sm items-center gap-1.5">
+                <Label htmlFor="reportType">Report Type</Label>
+                <Select >
+                  <SelectTrigger id="reportType" className="w-[180px]">
+                    <SelectValue placeholder="Select a report type" />
+                  </SelectTrigger>
+                  <SelectContent position="popper">
+                    <SelectItem value="summary">Subscription Summary</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="grid  max-w-sm items-center gap-1.5">
+                <Label htmlFor="reportFormat">Report Format</Label>
+                <Select>
+                  <SelectTrigger className='w-[180px]'>
+                    <SelectValue placeholder='Select format' />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value='pdf'>PDF</SelectItem>
+                    <SelectItem value='word'>Word</SelectItem>
+                    <SelectItem value='html'>HTML</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
             </div>
-               {/* Dummy Report Preview */}
+            {/* Dummy Report Preview */}
             <div className="border p-4 rounded-md">
               <h3 className="text-lg font-semibold mb-2">Report Preview</h3>
               <div className="bg-gray-100 p-3 rounded-md">

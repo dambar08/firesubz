@@ -19,6 +19,7 @@ import { Label } from "@/components/ui/label";
 import { Calendar } from "@/components/ui/calendar";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Slider } from "@/components/ui/slider";
+import Link from "next/link";
 import { Filter, CalendarIcon } from "lucide-react"; // Import CalendarIcon
 import { Button as ButtonUI } from "@/components/ui/button";
 import {
@@ -39,7 +40,7 @@ import {
 } from "@/components/ui/pagination";
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
-import { type DateRange } from "react-day-picker"; 
+import { type DateRange } from "react-day-picker";
 
 // Define the type for a single subscription based on the schema
 type Subscription = typeof subscriptions._.inferSelect;
@@ -100,9 +101,9 @@ export default function SubscriptionTracker() {
   // Rewritten dateRangeMatch function
   const dateRangeMatch = (subscription: Subscription) => {
     const startDate = new Date(subscription.startDate);
-    startDate.setHours(0,0,0,0); // Normalize time
+    startDate.setHours(0, 0, 0, 0); // Normalize time
     const renewalDate = subscription.renewalDate ? new Date(subscription.renewalDate) : null;
-    if (renewalDate) renewalDate.setHours(0,0,0,0); // Normalize time
+    if (renewalDate) renewalDate.setHours(0, 0, 0, 0); // Normalize time
 
     // Determine the date range based on the selected option
     const range = selectedDateOption === "custom" ? dateRange : calculateDateRange(selectedDateOption);
@@ -265,7 +266,7 @@ export default function SubscriptionTracker() {
                         setCurrentPage(1); // Reset page
                       }
                       }
-                       className="flex-grow capitalize"
+                      className="flex-grow capitalize"
                     >
                       {frequency}
                     </ButtonUI>
@@ -323,45 +324,45 @@ export default function SubscriptionTracker() {
 
           {/* Custom Date Range Picker Trigger */}
           {selectedDateOption === "custom" && (
-             <Popover>
-               <PopoverTrigger asChild>
-                 <Button
-                   id="date"
-                   variant={"outline"}
-                   className={cn(
-                     "w-auto justify-start text-left font-normal",
-                     !dateRange && "text-muted-foreground"
-                   )}
-                 >
-                   <CalendarIcon className="mr-2 h-4 w-4" />
-                   {dateRange?.from ? (
-                     dateRange.to ? (
-                       <>
-                         {format(dateRange.from, "LLL dd, y")} -{" "}
-                         {format(dateRange.to, "LLL dd, y")}
-                       </>
-                     ) : (
-                       format(dateRange.from, "LLL dd, y")
-                     )
-                   ) : (
-                     <span>Pick a date range</span>
-                   )}
-                 </Button>
-               </PopoverTrigger>
-               <PopoverContent className="w-auto p-0" align="end">
-                 <Calendar
-                   initialFocus
-                   mode="range"
-                   defaultMonth={dateRange?.from}
-                   selected={dateRange}
-                   onSelect={(newRange) => {
-                       setDateRange(newRange);
-                       setCurrentPage(1); // Reset page when range changes
-                    }}
-                   numberOfMonths={1} // Simplified for better mobile view
-                 />
-               </PopoverContent>
-             </Popover>
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button
+                  id="date"
+                  variant={"outline"}
+                  className={cn(
+                    "w-auto justify-start text-left font-normal",
+                    !dateRange && "text-muted-foreground"
+                  )}
+                >
+                  <CalendarIcon className="mr-2 h-4 w-4" />
+                  {dateRange?.from ? (
+                    dateRange.to ? (
+                      <>
+                        {format(dateRange.from, "LLL dd, y")} -{" "}
+                        {format(dateRange.to, "LLL dd, y")}
+                      </>
+                    ) : (
+                      format(dateRange.from, "LLL dd, y")
+                    )
+                  ) : (
+                    <span>Pick a date range</span>
+                  )}
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-auto p-0" align="end">
+                <Calendar
+                  initialFocus
+                  mode="range"
+                  defaultMonth={dateRange?.from}
+                  selected={dateRange}
+                  onSelect={(newRange) => {
+                    setDateRange(newRange);
+                    setCurrentPage(1); // Reset page when range changes
+                  }}
+                  numberOfMonths={1} // Simplified for better mobile view
+                />
+              </PopoverContent>
+            </Popover>
           )}
 
           {/* New Subscription Dialog */}
@@ -394,43 +395,43 @@ export default function SubscriptionTracker() {
       </div>
 
       {/* Subscription List */}
-      <div className="space-y-4">
+      <div className="flex flex-col gap-2">
         {currentSubscriptions.length > 0 ? (
           currentSubscriptions.map((subscription: Subscription) => (
-            <div key={subscription.id} className="bg-white p-4 sm:p-6 rounded-lg shadow-md"> {/* Adjusted padding */}
-              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center">
-                <div className="mb-2 sm:mb-0"> {/* Added margin-bottom for small screens */}
-                  <h2 className="text-lg sm:text-xl font-semibold text-gray-800">
-                    {subscription.name}
-                  </h2>
-                  <p className="text-sm text-gray-600 capitalize"> {/* Capitalized category */}
-                     Category: {subscription.category}
-                  </p>
-                </div>
-                <div className="text-left sm:text-right w-full sm:w-auto"> {/* Text alignment for small screens */}
-                  <p className="font-semibold sm:font-bold text-gray-800"> {/* Adjusted font weight */}
-                    ${subscription.price.toFixed(2)} {subscription.currency} {/* Added formatting */}
-                  </p>
-                  {subscription.renewalDate ? (
-                    <p className="text-xs sm:text-sm text-gray-500"> {/* Adjusted text size */}
-                      Renews on:{" "}
-                      {new Date(
-                        subscription.renewalDate,
-                      ).toLocaleDateString()}
+            <Link key={subscription.id} href={`/dashboard/subscriptions/${subscription.id}`}>
+              <div className="bg-white p-4 sm:p-6 rounded-lg shadow-md cursor-pointer hover:bg-gray-50 transition-colors"> {/* Add cursor-pointer and hover effect */}
+                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center">
+                  <div className="mb-2 sm:mb-0"> {/* Added margin-bottom for small screens */}
+                    <h2 className="text-lg sm:text-xl font-semibold text-gray-800">
+                      {subscription.name}
+                    </h2>
+                    <p className="text-sm text-gray-600 capitalize"> {/* Capitalized category */}
+                      Category: {subscription.category}
                     </p>
-                  ) : (
-                     <p className="text-xs sm:text-sm text-gray-500">One-time</p> // Indicate one-time if no renewal
-                  )}
+                  </div>
+                  <div className="text-left sm:text-right w-full sm:w-auto"> {/* Text alignment for small screens */}
+                    <p className="font-semibold sm:font-bold text-gray-800"> {/* Adjusted font weight */}
+                      ${subscription.price.toFixed(2)} {subscription.currency} {/* Added formatting */}
+                    </p>
+                    {subscription.renewalDate ? (
+                      <p className="text-xs sm:text-sm text-gray-500"> {/* Adjusted text size */}
+                        Renews on:{" "}
+                        {new Date(
+                          subscription.renewalDate,
+                        ).toLocaleDateString()}
+                      </p>
+                    ) : (
+                      <p className="text-xs sm:text-sm text-gray-500">One-time</p> // Indicate one-time if no renewal
+                    )}
+                  </div>
                 </div>
               </div>
-            </div>
+            </Link>
           ))
         ) : (
           <div className="text-center text-gray-500 py-10">No subscriptions match the current filters.</div>
         )}
       </div>
-
-      {/* Pagination Controls */}
       {totalPages > 1 && (
         <Pagination className="mt-8">
           <PaginationContent>
@@ -446,58 +447,58 @@ export default function SubscriptionTracker() {
             </PaginationItem>
             {/* Dynamic Page Number Rendering with Ellipsis (Basic Example) */}
             {(() => {
-               const pageNumbers = [];
-               const maxPagesToShow = 5; // Adjust how many page numbers to show
-               const halfMax = Math.floor(maxPagesToShow / 2);
-               let startPage = Math.max(1, currentPage - halfMax);
-               let endPage = Math.min(totalPages, currentPage + halfMax);
+              const pageNumbers = [];
+              const maxPagesToShow = 5; // Adjust how many page numbers to show
+              const halfMax = Math.floor(maxPagesToShow / 2);
+              let startPage = Math.max(1, currentPage - halfMax);
+              let endPage = Math.min(totalPages, currentPage + halfMax);
 
-               if (currentPage - halfMax <= 1) {
-                   endPage = Math.min(totalPages, maxPagesToShow);
-               }
-               if (currentPage + halfMax >= totalPages) {
-                   startPage = Math.max(1, totalPages - maxPagesToShow + 1);
-               }
+              if (currentPage - halfMax <= 1) {
+                endPage = Math.min(totalPages, maxPagesToShow);
+              }
+              if (currentPage + halfMax >= totalPages) {
+                startPage = Math.max(1, totalPages - maxPagesToShow + 1);
+              }
 
-               if (startPage > 1) {
-                  pageNumbers.push(
-                     <PaginationItem key={1}>
-                       <PaginationLink href="#" onClick={(e) => { e.preventDefault(); handlePageChange(1); }}>1</PaginationLink>
-                     </PaginationItem>
-                  );
-                  if (startPage > 2) {
-                     pageNumbers.push(<PaginationItem key="start-ellipsis"><PaginationEllipsis /></PaginationItem>);
-                  }
-               }
+              if (startPage > 1) {
+                pageNumbers.push(
+                  <PaginationItem key={1}>
+                    <PaginationLink href="#" onClick={(e) => { e.preventDefault(); handlePageChange(1); }}>1</PaginationLink>
+                  </PaginationItem>
+                );
+                if (startPage > 2) {
+                  pageNumbers.push(<PaginationItem key="start-ellipsis"><PaginationEllipsis /></PaginationItem>);
+                }
+              }
 
-               for (let i = startPage; i <= endPage; i++) {
-                 pageNumbers.push(
-                   <PaginationItem key={i}>
-                     <PaginationLink
-                       href="#"
-                       onClick={(e) => { e.preventDefault(); handlePageChange(i); }}
-                       isActive={currentPage === i}
-                       className="cursor-pointer"
-                     >
-                       {i}
-                     </PaginationLink>
-                   </PaginationItem>
-                 );
-               }
+              for (let i = startPage; i <= endPage; i++) {
+                pageNumbers.push(
+                  <PaginationItem key={i}>
+                    <PaginationLink
+                      href="#"
+                      onClick={(e) => { e.preventDefault(); handlePageChange(i); }}
+                      isActive={currentPage === i}
+                      className="cursor-pointer"
+                    >
+                      {i}
+                    </PaginationLink>
+                  </PaginationItem>
+                );
+              }
 
-                if (endPage < totalPages) {
-                    if (endPage < totalPages - 1) {
-                       pageNumbers.push(<PaginationItem key="end-ellipsis"><PaginationEllipsis /></PaginationItem>);
-                    }
-                    pageNumbers.push(
-                       <PaginationItem key={totalPages}>
-                         <PaginationLink href="#" onClick={(e) => { e.preventDefault(); handlePageChange(totalPages); }}>{totalPages}</PaginationLink>
-                       </PaginationItem>
-                    );
-                 }
+              if (endPage < totalPages) {
+                if (endPage < totalPages - 1) {
+                  pageNumbers.push(<PaginationItem key="end-ellipsis"><PaginationEllipsis /></PaginationItem>);
+                }
+                pageNumbers.push(
+                  <PaginationItem key={totalPages}>
+                    <PaginationLink href="#" onClick={(e) => { e.preventDefault(); handlePageChange(totalPages); }}>{totalPages}</PaginationLink>
+                  </PaginationItem>
+                );
+              }
 
-               return pageNumbers;
-             })()}
+              return pageNumbers;
+            })()}
             <PaginationItem>
               <PaginationNext
                 href="#"
@@ -505,7 +506,7 @@ export default function SubscriptionTracker() {
                   e.preventDefault();
                   handlePageChange(Math.min(totalPages, currentPage + 1));
                 }}
-                 className={cn("cursor-pointer", currentPage === totalPages ? "pointer-events-none opacity-50" : "")}
+                className={cn("cursor-pointer", currentPage === totalPages ? "pointer-events-none opacity-50" : "")}
               />
             </PaginationItem>
           </PaginationContent>
