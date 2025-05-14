@@ -21,6 +21,7 @@ import { Separator } from '@/components/ui/separator';
 import { cn } from "@/lib/utils"; // Import cn utility for cleaner class merging
 import { navigationMenuTriggerStyle } from "./ui/navigation-menu";
 import { useRouter } from "next/navigation";
+import { signOut } from "next-auth/react";
 
 interface Notification {
   id: number;
@@ -183,7 +184,7 @@ const DashboardHeader = ({ userEmail }: { userEmail: string }) => {
             <DropdownMenuLabel>{userEmail}</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem>Settings</DropdownMenuItem>
-            <DropdownMenuItem>Logout</DropdownMenuItem>
+            <DropdownMenuItem onClick={() => signOut()}>Logout</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
