@@ -140,7 +140,6 @@ function ActionSearch({ actions = allActions }: { actions?: Action[] }) {
     },
   }
 
-  // Reset selectedAction when focusing the input
   const handleFocus = () => {
     setSelectedAction(null)
     setIsFocused(true)

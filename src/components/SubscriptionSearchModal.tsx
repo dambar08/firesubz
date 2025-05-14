@@ -1,14 +1,12 @@
 "use client"
 
 import { useState, useEffect } from "react";
-import SubscriptionSearchInput from "./SubscriptionSearchInput"; // Import the search input component
-import * as motion from "motion/react-client";
-import { AnimatePresence } from "motion/react";
+import SubscriptionSearchInput from "./SubscriptionSearchInput";
+import { motion, AnimatePresence } from "motion/react";
 
 const SubscriptionSearchModal: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
 
-  // Effect to handle keyboard shortcut (e.g., Cmd+K) to open the modal
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.metaKey && event.key === 'k') {
@@ -34,20 +32,16 @@ const SubscriptionSearchModal: React.FC = () => {
     <AnimatePresence>
       {isOpen && (
         <motion.div
-          className="fixed inset-0 bg-black bg-opacity-70 z-50 flex justify-center items-start p-4" // Dark, semi-transparent overlay
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          onClick={closeModal} // Close modal when clicking outside
+          className="fixed inset-0 bg-black bg-opacity-70 z-50 flex justify-center items-start p-4"
+          initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+          onClick={closeModal}
         >
           <motion.div
-            className="w-full max-w-md mt-20" // Container to hold and position the search input
-            initial={{ y: -50 }}
-            animate={{ y: 0 }}
-            exit={{ y: -50 }}
-            onClick={(e) => e.stopPropagation()} // Prevent modal from closing when clicking inside the search component
+            className="w-full max-w-md mt-20"
+            initial={{ y: -50 }} animate={{ y: 0 }} exit={{ y: -50 }}
+            onClick={(e) => e.stopPropagation()}
           >
-            <SubscriptionSearchInput /> {/* The search input component */}
+            <SubscriptionSearchInput />
           </motion.div>
         </motion.div>
       )}

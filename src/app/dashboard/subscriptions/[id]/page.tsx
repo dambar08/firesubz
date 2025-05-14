@@ -1,18 +1,13 @@
-import { db } from "@/server/db"; // Assuming your database instance
-import { subscriptions } from "@/server/db/schema"; // Import the subscriptions schema
-import { eq } from "drizzle-orm"; // Import eq for querying
-import { notFound } from "next/navigation"; // For handling not found cases
+import { db } from "@/server/db";
+import { subscriptions } from "@/server/db/schema";
+import { eq } from "drizzle-orm";
+import { notFound } from "next/navigation";
 
 interface SubscriptionDetailsPageProps {
-  params: Promise<{
-    id: string; // The subscription ID from the URL
-  }>;
+  params: { id: string };
 }
 
-const SubscriptionDetailsPage = async ({ params }: SubscriptionDetailsPageProps) => {
-  const { id: subscriptionId } = await params;
-
-  // Fetch the subscription details from the database
+const SubscriptionDetailsPage = async ({ params: { id: subscriptionId } }: SubscriptionDetailsPageProps) => {
   const subscription = await db.query.subscriptions.findFirst({
     where: eq(subscriptions.id, Number(subscriptionId)), // Assuming id is a number, adjust if it's a string
   });
@@ -24,7 +19,7 @@ const SubscriptionDetailsPage = async ({ params }: SubscriptionDetailsPageProps)
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-6">{subscription?.name}</h1> {/* Display subscription name */}
+      <h1 className="text-3xl font-bold mb-6">{subscription?.name}</h1>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
@@ -57,7 +52,6 @@ const SubscriptionDetailsPage = async ({ params }: SubscriptionDetailsPageProps)
         </div>
       </div>
 
-      {/* You can add more sections here for additional details, notes, etc. */}
     </div>
   );
 };

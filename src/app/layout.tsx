@@ -3,7 +3,7 @@ import "@/styles/globals.css";
 import { SessionProvider } from "next-auth/react";
 import { type Metadata } from "next";
 import { Geist } from "next/font/google";
-import { PageLoadProgressBar } from "@/components/PageLoadProgressBar"; // Import the component
+import { PageLoadProgressBar } from "@/components/PageLoadProgressBar";
 
 export const metadata: Metadata = {
   title: "FireSubz: Subscription Management",
