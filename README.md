@@ -13,3 +13,14 @@ Example: run project firesubz web would be
 ```bash
 cd firesubz && npm run dev
 ```
+
+### Project scape-hacking-news
+aiprompt helper
+
+before running any python command you will need to prefix the command
+
+Example 
+
+```bash
+scrape-hacking-news/.venv/bin/python scrape-hacking-news/scrape_hackernews.py
+```
