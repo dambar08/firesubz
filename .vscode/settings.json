@@ -2,9 +2,22 @@
     "IDX.aI.enableInlineCompletion": true,
     "IDX.aI.enableCodebaseIndexing": true,
     "search.exclude": {
+        "**/firesubz": true,
         "**/node_modules": true,
-        "**/tmp": true,
         "**/bower_components": true,
-        "**/*.code-search": true
+        "**/*.code-search": true,
+        "firesubz": true,
+        "scrape-hacking-news": true
+    },
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/CVS": true,
+        "**/.DS_Store": true,
+        "**/Thumbs.db": true,
+        "**/*.crswap": true,
+        // "firesubz": true,
+        // "scrape-hacking-news": true
     }
 }

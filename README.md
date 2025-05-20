@@ -1,40 +1,15 @@
-# FireSubz
+Get started by customizing your environment (defined in the .idx/dev.nix file) with the tools and IDE extensions you'll need for your project!
 
-A subscription management application to help users track and manage their various subscriptions.
+Learn more at https://firebase.google.com/docs/studio/customize-workspace
 
-## Features
+Project
+1. firesubz (under firesubz folder)
+2. gamespot (under gamespot folder)
+3. scrape-hacking-news (under scrape-hacking-news folder)
 
-- User authentication and account management
-- Add, edit, and delete subscriptions
-- View a list of all subscriptions with details (name, price, category, renewal date, etc.)
-- Filter and sort subscriptions
-- Dashboard with summary information and charts
-- Seed database with dummy data for testing
+All commands for gemini for a project must first cd into the folder then followed by the command. 
+Example: run project firesubz web would be
 
-## Technologies
-
-- Next.js (React framework)
-- Drizzle ORM (database ORM)
-- SQLite (database)
-- Tailwind CSS (styling)
-- NextAuth.js (authentication)
-- zod (validation)
-- react-hook-form (form management)
-- chart.js (charts)
-
-
-## Prerequisites
-
-- Node.js (version 18 or later)
-- npm (or yarn)
-
-## Setup
-
-    
-
-## How do I deploy this?
-
-
-## Author
-
-Firesubz
+```bash
+cd firesubz && npm run dev
+```
