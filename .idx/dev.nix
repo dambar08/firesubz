@@ -32,7 +32,7 @@
         #     PORT = "$PORT";
         #   };
         # };
-        
+
         # web = {
         #   # Example: run "npm run dev" with PORT set to IDX's defined port for previews,
         #   # and show it in IDX's web preview panel
@@ -47,7 +47,7 @@
         web = {
           # Example: run "npm run dev" with PORT set to IDX's defined port for previews,
           # and show it in IDX's web preview panel
-          command = ["npm" "run" "my-strapi-project:dev"];
+          command = ["npm" "run" "strapi-blog:client:dev"];
           manager = "web";
           env = {
             # Environment variables to set for your server
@@ -79,7 +79,7 @@
       # Runs when the workspace is (re)started
       onStart = {
         # Example: start a background task to watch and re-build backend code
-        # watch-backend = "npm run gamespot:dev";
+        watch-backend = ["npm" "run" "strapi-blog:server:dev"];
       };
     };
   };

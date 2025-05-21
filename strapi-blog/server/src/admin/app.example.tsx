@@ -1,4 +1,5 @@
 import type { StrapiApp } from '@strapi/strapi/admin';
+import './styles/globals.css';
 
 export default {
   config: {
@@ -28,7 +29,7 @@ export default {
       // 'uk',
       // 'vi',
       // 'zh-Hans',
-      // 'zh',
+      'zh',
     ],
   },
   bootstrap(app: StrapiApp) {

@@ -1,5 +1,5 @@
 {
-  "name": "my-strapi-project",
+  "name": "strapi-blog",
   "version": "0.1.0",
   "private": true,
   "description": "A Strapi application",
@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "@strapi/plugin-cloud": "5.13.1",
+    "@strapi/plugin-graphql": "^5.13.1",
     "@strapi/plugin-users-permissions": "5.13.1",
     "@strapi/strapi": "5.13.1",
     "better-sqlite3": "11.3.0",
@@ -25,17 +26,21 @@
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-router-dom": "^6.0.0",
+    "strapi-plugin-meilisearch": "^0.13.2",
     "styled-components": "^6.0.0"
   },
   "devDependencies": {
-    "@types/node": "^20",
+    "@types/node": "^22.15.0",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "autoprefixer": "^10.4.21",
+    "postcss": "^8.5.3",
+    "tailwindcss": "^4.1.7",
     "typescript": "^5"
   },
   "engines": {
-    "node": ">=18.0.0 <=22.x.x",
-    "npm": ">=6.0.0"
+    "node": ">=22.0.0 <=22.x.x",
+    "npm": ">=10.0.0"
   },
   "strapi": {
     "uuid": "ef30a12f-b4f7-4631-b8db-0c8afd27260a",

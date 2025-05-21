@@ -5,7 +5,8 @@
   "scripts": {
     "firesubz:dev": "cd firesubz && npm run dev",
     "gamespot:dev": "cd gamespot && npm run dev",
-    "my-strapi-project:dev": "cd my-strapi-project && npm run dev"
+    "strapi-blog:server:dev": "cd strapi-blog && cd server && npm run dev",
+    "strapi-blog:client:dev": "cd strapi-blog && cd client && npm run dev"
   },
   "badges": [],
   "keywords": ["nextjs", "react","nodejs", "python", "machine learning"],
