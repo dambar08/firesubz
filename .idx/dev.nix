@@ -8,7 +8,7 @@
     # pkgs.go
     pkgs.python312
     pkgs.python312Packages.pip
-    # pkgs.nodejs_20
+    pkgs.nodejs_22
     # pkgs.nodePackages.nodemon
   ];
   # Sets environment variables in the workspace
@@ -72,14 +72,17 @@
       # Runs when a workspace is first created
       onCreate = {
         # Example: install JS dependencies from NPM
-        # npm-install = "npm install";
+        firesubz-npm-install = "cd firesubz && npm install";
+        gamespot-npm-install = "cd gamespot && npm install";
+        strapi-server-npm-install = "cd strapi-blog && cd server && gamespot && npm install";
+        strapi-client-npm-install = "cd strapi-blog && cd client && gamespot && npm install";
         # Open editors for the following files by default, if they exist:
         default.openFiles = [ ".idx/dev.nix" "README.md" ];
       };
       # Runs when the workspace is (re)started
       onStart = {
         # Example: start a background task to watch and re-build backend code
-        watch-backend = ["npm" "run" "strapi-blog:server:dev"];
+        watch-backend = "npm run strapi-blog:server:dev";
       };
     };
   };
