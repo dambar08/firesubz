@@ -45,25 +45,23 @@
         # };
 
         web = {
-          # Example: run "npm run dev" with PORT set to IDX's defined port for previews,
-          # and show it in IDX's web preview panel
-          command = ["npm" "run" "strapi-blog:client:dev"];
+          command = ["npm" "run" "dev" "--" "-p" "$PORT"];
           manager = "web";
           env = {
-            # Environment variables to set for your server
-            PORT = "$PORT";
+            PORT = "3000";
           };
+          cwd = "strapi-blog/client";
         };
 
-        # firesubz_web = {
-        #   # Example: run "npm run dev" with PORT set to IDX's defined port for previews,
-        #   # and show it in IDX's web preview panel
-        #   command = ["npm" "run" "firesubz:dev"];
+        # web = {
+        #   command = ["npm" "run" "strapi-blog:server:dev"];
         #   manager = "web";
         #   env = {
         #     # Environment variables to set for your server
-        #     PORT = "$PORT";
+        #     HOST = "0.0.0.0"
+        #     PORT = "1337";
         #   };
+        #   cwd = "strapi-blog/server";  
         # };
       };
     };
