@@ -25,7 +25,40 @@
         # web = {
         #   # Example: run "npm run dev" with PORT set to IDX's defined port for previews,
         #   # and show it in IDX's web preview panel
-        #   command = ["npm" "run" "dev"];
+        #   command = ["npm" "run" "firesubz:dev"];
+        #   manager = "web";
+        #   env = {
+        #     # Environment variables to set for your server
+        #     PORT = "$PORT";
+        #   };
+        # };
+        
+        # web = {
+        #   # Example: run "npm run dev" with PORT set to IDX's defined port for previews,
+        #   # and show it in IDX's web preview panel
+        #   command = ["npm" "run" "gamespot:dev"];
+        #   manager = "web";
+        #   env = {
+        #     # Environment variables to set for your server
+        #     PORT = "$PORT";
+        #   };
+        # };
+
+        web = {
+          # Example: run "npm run dev" with PORT set to IDX's defined port for previews,
+          # and show it in IDX's web preview panel
+          command = ["npm" "run" "my-strapi-project:dev"];
+          manager = "web";
+          env = {
+            # Environment variables to set for your server
+            PORT = "$PORT";
+          };
+        };
+
+        # firesubz_web = {
+        #   # Example: run "npm run dev" with PORT set to IDX's defined port for previews,
+        #   # and show it in IDX's web preview panel
+        #   command = ["npm" "run" "firesubz:dev"];
         #   manager = "web";
         #   env = {
         #     # Environment variables to set for your server
@@ -46,7 +79,7 @@
       # Runs when the workspace is (re)started
       onStart = {
         # Example: start a background task to watch and re-build backend code
-        # watch-backend = "npm run watch-backend";
+        # watch-backend = "npm run gamespot:dev";
       };
     };
   };

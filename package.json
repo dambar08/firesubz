@@ -1,0 +1,12 @@
+{
+  "name": "firesubz",
+  "version": "1.0.0",
+  "description": "Get started by customizing your environment (defined in the .idx/dev.nix file) with the tools and IDE extensions you'll need for your project!",
+  "scripts": {
+    "firesubz:dev": "cd firesubz && npm run dev",
+    "gamespot:dev": "cd gamespot && npm run dev",
+    "my-strapi-project:dev": "cd my-strapi-project && npm run dev"
+  },
+  "author": "",
+  "license": "ISC"
+}
