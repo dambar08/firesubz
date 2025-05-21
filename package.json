@@ -7,6 +7,8 @@
     "gamespot:dev": "cd gamespot && npm run dev",
     "my-strapi-project:dev": "cd my-strapi-project && npm run dev"
   },
+  "badges": [],
+  "keywords": ["nextjs", "react","nodejs", "python", "machine learning"],
   "author": "",
   "license": "ISC"
 }
