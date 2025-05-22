@@ -8,6 +8,8 @@ export const env = createEnv({
    */
   server: {
     NODE_ENV: z.enum(["development", "test", "production"]),
+    STRAPI_API_URL: z.string().url(),
+    STRAPI_ASSET_HOST: z.string().url()
   },
 
   /**
@@ -25,6 +27,8 @@ export const env = createEnv({
    */
   runtimeEnv: {
     NODE_ENV: process.env.NODE_ENV,
+    STRAPI_API_URL: process.env.STRAPI_API_URL,
+    STRAPI_ASSET_HOST: process.env.STRAPI_ASSET_HOST
     // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
   },
   /**

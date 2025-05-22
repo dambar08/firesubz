@@ -2,14 +2,7 @@
 
 import { useState } from "react"
 import { Badge } from "@/components/ui/badge"
-
-interface Category {
-  id: number
-  attributes: {
-    name: string
-    slug: string
-  }
-}
+import type { Category } from "@/types/strapi"
 
 interface CategoryFilterProps {
   categories: Category[]
@@ -33,11 +26,11 @@ export function CategoryFilter({ categories, onFilterChange }: CategoryFilterPro
       {categories.map((category) => (
         <Badge
           key={category.id}
-          variant={selectedCategories.includes(category.attributes.slug) ? "default" : "outline"}
+          variant={selectedCategories.includes(category.slug) ? "default" : "outline"}
           className="cursor-pointer"
-          onClick={() => toggleCategory(category.attributes.slug)}
+          onClick={() => toggleCategory(category.slug)}
         >
-          {category.attributes.name}
+          {category.name}
         </Badge>
       ))}
     </div>
