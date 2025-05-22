@@ -1,36 +1,149 @@
-import Link from "next/link";
+import Link from "next/link"
+import Image from "next/image"
+import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
+import { CalendarIcon, Clock } from "lucide-react"
 
-export default function HomePage() {
+
+async function getBlogPosts() {
+  // In a real implementation, you would fetch from your Strapi API
+  // Example: const res = await fetch(`${process.env.STRAPI_API_URL}/api/articles?populate=*`)
+
+  // For demonstration, using placeholder data
+  return [
+    {
+      id: 1,
+      attributes: {
+        title: "Getting Started with Next.js and Strapi",
+        slug: "getting-started-with-nextjs-and-strapi",
+        description: "Learn how to build a modern blog with Next.js and Strapi CMS",
+        content: "This is a comprehensive guide to building with Next.js and Strapi...",
+        publishedAt: "2023-05-15T09:00:00.000Z",
+        readingTime: "8 min read",
+        cover: {
+          data: {
+            attributes: {
+              url: "/placeholder.svg?height=400&width=600",
+            },
+          },
+        },
+        categories: {
+          data: [
+            { id: 1, attributes: { name: "Tutorial", slug: "tutorial" } },
+            { id: 2, attributes: { name: "Web Development", slug: "web-development" } },
+          ],
+        },
+      },
+    },
+    {
+      id: 2,
+      attributes: {
+        title: "Advanced Strapi Content Modeling",
+        slug: "advanced-strapi-content-modeling",
+        description: "Discover best practices for structuring your content in Strapi",
+        content: "Content modeling is a crucial aspect of any CMS implementation...",
+        publishedAt: "2023-06-22T14:30:00.000Z",
+        readingTime: "12 min read",
+        cover: {
+          data: {
+            attributes: {
+              url: "/placeholder.svg?height=400&width=600",
+            },
+          },
+        },
+        categories: {
+          data: [
+            { id: 1, attributes: { name: "Tutorial", slug: "tutorial" } },
+            { id: 3, attributes: { name: "CMS", slug: "cms" } },
+          ],
+        },
+      },
+    },
+    {
+      id: 3,
+      attributes: {
+        title: "Building a Headless E-commerce Site",
+        slug: "building-a-headless-ecommerce-site",
+        description: "Step-by-step guide to creating an e-commerce site with Strapi and Next.js",
+        content: "Headless e-commerce is revolutionizing how we build online stores...",
+        publishedAt: "2023-07-10T10:15:00.000Z",
+        readingTime: "15 min read",
+        cover: {
+          data: {
+            attributes: {
+              url: "/placeholder.svg?height=400&width=600",
+            },
+          },
+        },
+        categories: {
+          data: [
+            { id: 4, attributes: { name: "E-commerce", slug: "ecommerce" } },
+            { id: 2, attributes: { name: "Web Development", slug: "web-development" } },
+          ],
+        },
+      },
+    },
+  ]
+}
+
+
+export default async function HomePage() {
+  const posts = await getBlogPosts();
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c] text-white">
-      <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16">
-        <h1 className="text-5xl font-extrabold tracking-tight text-white sm:text-[5rem]">
-          Create <span className="text-[hsl(280,100%,70%)]">T3</span> App
-        </h1>
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-8">
+    <main className="container mx-auto py-8 px-4">
+      <header className="mb-12 text-center">
+        <h1 className="text-4xl font-bold mb-4">My Strapi Blog</h1>
+        <p className="text-muted-foreground max-w-2xl mx-auto">
+          A modern blog built with Next.js and Strapi CMS, featuring the latest articles on web development and
+          technology.
+        </p>
+      </header>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {posts.map((post) => (
           <Link
-            className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 text-white hover:bg-white/20"
-            href="https://create.t3.gg/en/usage/first-steps"
-            target="_blank"
+            href={`/blog/${post.attributes.slug}`}
+            key={post.id}
+            className="transition-transform hover:-translate-y-1"
           >
-            <h3 className="text-2xl font-bold">First Steps →</h3>
-            <div className="text-lg">
-              Just the basics - Everything you need to know to set up your
-              database and authentication.
-            </div>
+            <Card className="h-full overflow-hidden">
+              <div className="aspect-video relative overflow-hidden">
+                <Image
+                  src={post.attributes.cover.data.attributes.url || "/placeholder.svg"}
+                  alt={post.attributes.title}
+                  fill
+                  className="object-cover"
+                />
+              </div>
+              <CardHeader>
+                <div className="flex flex-wrap gap-2 mb-2">
+                  {post.attributes.categories.data.map((category) => (
+                    <Badge key={category.id} variant="secondary">
+                      {category.attributes.name}
+                    </Badge>
+                  ))}
+                </div>
+                <h2 className="text-xl font-bold line-clamp-2">{post.attributes.title}</h2>
+              </CardHeader>
+              <CardContent>
+                <p className="text-muted-foreground line-clamp-3">{post.attributes.description}</p>
+              </CardContent>
+              <CardFooter className="text-sm text-muted-foreground">
+                <div className="flex items-center gap-4">
+                  <div className="flex items-center gap-1">
+                    <CalendarIcon className="h-4 w-4" />
+                    <span>{new Date(post.attributes.publishedAt).toLocaleDateString()}</span>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <Clock className="h-4 w-4" />
+                    <span>{post.attributes.readingTime}</span>
+                  </div>
+                </div>
+              </CardFooter>
+            </Card>
           </Link>
-          <Link
-            className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 text-white hover:bg-white/20"
-            href="https://create.t3.gg/en/introduction"
-            target="_blank"
-          >
-            <h3 className="text-2xl font-bold">Documentation →</h3>
-            <div className="text-lg">
-              Learn more about Create T3 App, the libraries it uses, and how to
-              deploy it.
-            </div>
-          </Link>
-        </div>
+        ))}
       </div>
     </main>
   );
