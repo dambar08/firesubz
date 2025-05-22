@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge"
 import { CalendarIcon, Clock } from "lucide-react"
 import type { Post } from "@/types/strapi"
 import { env } from "@/env"
+import { safeTransformAssetUrl } from "@/lib/utils"
 
 interface BlogCardProps {
   post: Post
@@ -16,7 +17,7 @@ export function BlogCard({ post }: BlogCardProps) {
       <Card className="h-full overflow-hidden">
         <div className="aspect-video relative overflow-hidden">
           <Image
-            src={post.cover?.url ? `${env.STRAPI_ASSET_HOST}${post.cover?.url}` : "/placeholder.svg?height=400&width=600"}
+            src={safeTransformAssetUrl(post.cover?.url, "/placeholder.svg?height=400&width=600")}
             alt={post.title}
             fill
             className="object-cover"

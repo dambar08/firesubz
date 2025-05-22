@@ -13,7 +13,7 @@ const config = {
     ignoreBuildErrors: true,
   },
   images: {
-    remotePatterns: [new URL(`${process.env.STRAPI_ASSET_HOST}/uploads/**`)],
+    remotePatterns: [new URL(`${process.env.NEXT_PUBLIC_STRAPI_ASSET_HOST}/uploads/**`)],
   },
 };
 

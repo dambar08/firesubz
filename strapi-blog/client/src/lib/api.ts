@@ -10,7 +10,7 @@
 //     ...options,
 //   }
 
-//   const apiUrl = process.env.STRAPI_API_URL || "http://localhost:1337"
+//   const apiUrl = process.env.NEXT_PUBLIC_STRAPI_API_URL || "http://localhost:1337"
 //   const response = await fetch(`${apiUrl}/api/${endpoint}`, mergedOptions)
 
 //   if (!response.ok) {
@@ -32,7 +32,7 @@ import { mockCategories, mockPosts } from "./mocks";
 
 // Function to fetch data from Strapi API
 export async function fetchAPI<T>(endpoint: string, options = {}): Promise<ApiResponse<T>> {
-  const apiUrl = env.STRAPI_API_URL;
+  const apiUrl = env.NEXT_PUBLIC_STRAPI_API_URL;
 
   if (apiUrl) {
     const defaultOptions = {

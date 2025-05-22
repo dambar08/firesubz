@@ -10,6 +10,7 @@ import { MarkdownRenderer } from "@/components/markdown-renderer"
 import type { MediaBlock, QuoteBlock, RichTextBlock, SliderBlock } from "@/types/strapi"
 import { Suspense } from "react";
 import { env } from "@/env";
+import { safeTransformAssetUrl } from "@/lib/utils";
 
 async function getBlogPost(slug: string) {
   const response = await getPostBySlug(slug);
@@ -55,7 +56,7 @@ export default async function BlogPost({ params }: { params: { slug: string } })
 
           <div className="aspect-[2/1] relative rounded-lg overflow-hidden mb-8">
             <Image
-              src={post.cover?.url ? `${env.STRAPI_ASSET_HOST}${post.cover?.url}` : "/placeholder.svg"}
+              src={safeTransformAssetUrl(post.cover?.url)}
               alt={post.title}
               fill
               className="object-cover"
@@ -67,7 +68,7 @@ export default async function BlogPost({ params }: { params: { slug: string } })
             <div className="flex items-center gap-4 p-4 bg-muted rounded-lg mb-8">
               <div className="relative h-12 w-12 rounded-full overflow-hidden">
                 <Image
-                  src={post.author?.avatar?.url ? `${env.STRAPI_ASSET_HOST}${post.author?.avatar?.url}` : "/placeholder.svg"}
+                  src={safeTransformAssetUrl(post.author?.avatar?.url)}
                   alt={post.author.name}
                   fill
                   className="object-cover"

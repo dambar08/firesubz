@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge"
 import { CalendarIcon, Clock } from "lucide-react"
 import { getAllPosts } from "@/server/api"
 import { env } from "@/env"
+import { safeTransformAssetUrl } from "@/lib/utils"
 
 async function getBlogPosts() {
   const response = await getAllPosts();
@@ -34,7 +35,7 @@ export default async function HomePage() {
             <Card className="h-full overflow-hidden">
               <div className="aspect-video relative overflow-hidden">
                 <Image
-                  src={post?.cover?.url ? `${env.STRAPI_ASSET_HOST}${post.cover?.url}` : "/placeholder.svg"}
+                  src={safeTransformAssetUrl(post?.cover?.url)}
                   alt={post.title}
                   fill
                   className="object-cover"

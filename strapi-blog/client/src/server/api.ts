@@ -8,7 +8,7 @@ export async function fetchAPI<T>(
   endpoint: string,
   options = {},
 ): Promise<ApiResponse<T>> {
-  const apiUrl = env.STRAPI_API_URL;
+  const apiUrl = env.NEXT_PUBLIC_STRAPI_API_URL;
 
   if (apiUrl) {
     const defaultOptions = {
