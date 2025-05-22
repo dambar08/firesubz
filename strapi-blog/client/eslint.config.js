@@ -1,5 +1,7 @@
 import { FlatCompat } from "@eslint/eslintrc";
 import tseslint from "typescript-eslint";
+import reactHooks from "eslint-plugin-react-hooks";
+import reactRefresh from "eslint-plugin-react-refresh";
 
 const compat = new FlatCompat({
   baseDirectory: import.meta.dirname,
@@ -17,6 +19,10 @@ export default tseslint.config(
       ...tseslint.configs.recommendedTypeChecked,
       ...tseslint.configs.stylisticTypeChecked,
     ],
+    plugins: {
+      "react-hooks": reactHooks,
+      "react-refresh": reactRefresh,
+    },
     rules: {
       "@typescript-eslint/array-type": "off",
       "@typescript-eslint/consistent-type-definitions": "off",
@@ -32,6 +38,11 @@ export default tseslint.config(
       "@typescript-eslint/no-misused-promises": [
         "error",
         { checksVoidReturn: { attributes: false } },
+      ],
+      ...reactHooks.configs.recommended.rules,
+      "react-refresh/only-export-components": [
+        "warn",
+        { allowConstantExport: true },
       ],
     },
   },
